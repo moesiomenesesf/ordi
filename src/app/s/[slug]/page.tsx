@@ -21,7 +21,7 @@ export default async function PublicSellerPage({ params }: { params: Promise<{ s
     if (sellerError) throw sellerError;
     if (!seller) return <CatalogMessage title="Negócio não encontrado" message="Confira se o link recebido está correto." />;
 
-    const { data: rows, error: productsError } = await supabase.from("public_catalog_products").select("id,name,short_description,estimated_minutes,price_type,base_price,sort_order").eq("public_slug", slug).order("sort_order").order("name");
+    const { data: rows, error: productsError } = await supabase.from("public_catalog_products").select("id,name,short_description,price_type,base_price,sort_order").eq("public_slug", slug).order("sort_order").order("name");
     if (productsError) throw productsError;
     const products = (rows ?? []) as Omit<PublicCatalogProduct, "product_images">[];
     const { data: imageRows, error: imagesError } = await supabase.from("public_catalog_product_images").select("product_id,storage_path,position").eq("public_slug", slug).order("position");
@@ -45,7 +45,7 @@ export default async function PublicSellerPage({ params }: { params: Promise<{ s
             <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">{seller.business_name}</h1>
             {seller.description && <p className="mt-4 max-w-3xl whitespace-pre-line leading-7 text-neutral-600">{seller.description}</p>}
           </header>
-          {productsWithImages.length ? <PublicCatalog products={productsWithImages} /> : (
+          {productsWithImages.length ? <PublicCatalog products={productsWithImages} sellerSlug={slug} /> : (
             <section className="rounded-2xl border border-dashed border-neutral-300 bg-white px-6 py-12 text-center"><h2 className="text-xl font-semibold">Nenhum produto disponível no momento</h2><p className="mt-2 text-neutral-600">Volte mais tarde para conferir o catálogo.</p></section>
           )}
           <footer className="py-10 text-center text-xs text-neutral-400">Catálogo criado com Ordi</footer>
