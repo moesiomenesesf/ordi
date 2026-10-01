@@ -1,0 +1,16 @@
+node_modules/
+.next/
+/out/
+/build/
+.DS_Store
+*.pem
+*.tsbuildinfo
+.env*
+!.env.example
+.vercel/
+.turbo/
+coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
