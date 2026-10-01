@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { formatProductPrice, formatProductionTime, PRODUCT_IMAGES_BUCKET, type Product } from "@/lib/products";
 import { createClient } from "@/lib/supabase/client";
+import { ProductImageGallery } from "@/components/product-image-gallery";
 
 export function ProductList({ products }: { products: Product[] }) {
   const router = useRouter();
@@ -88,12 +88,7 @@ export function ProductList({ products }: { products: Product[] }) {
       {error && <p role="alert" className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
       {products.map((product, index) => <article key={product.id} className="rounded-2xl border border-neutral-200 bg-white p-5 sm:p-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
-          <div className="grid w-full grid-cols-4 gap-2 sm:w-44 sm:shrink-0">
-            {(product.product_images ?? []).slice(0, 4).map((image) => <div key={image.id} className="aspect-square overflow-hidden rounded-lg bg-neutral-100">
-              {image.signed_url ? <Image src={image.signed_url} alt="" width={500} height={500} unoptimized className="size-full object-cover" /> : <span className="sr-only">Imagem indisponível</span>}
-            </div>)}
-            {!product.product_images?.length && <div className="col-span-4 flex aspect-[4/1] items-center justify-center rounded-lg bg-neutral-100 text-sm text-neutral-400 sm:aspect-square">Sem imagens</div>}
-          </div>
+          <div className="w-full sm:w-44 sm:shrink-0"><ProductImageGallery images={product.product_images ?? []} label={product.name} /></div>
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2"><h2 className="text-lg font-semibold">{product.name}</h2><span className={`rounded-full px-2.5 py-1 text-xs font-medium ${product.is_active ? "bg-emerald-50 text-emerald-800" : "bg-neutral-100 text-neutral-600"}`}>{product.is_active ? "Ativo" : "Desativado"}</span>{product.is_active && <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${product.available_for_orders ? "bg-sky-50 text-sky-800" : "bg-amber-50 text-amber-800"}`}>{product.available_for_orders ? "Aceita encomendas" : "Indisponível"}</span>}</div>
             <p className="mt-2 text-sm text-neutral-600">{formatProductionTime(product.estimated_minutes)} · {formatProductPrice(product)}</p>

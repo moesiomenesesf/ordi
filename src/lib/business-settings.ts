@@ -23,10 +23,10 @@ export type HoursColumn = (typeof weekDays)[number]["column"];
 
 export type BusinessSettings = {
   seller_id: string;
+  public_slug: string;
   business_name: string;
   description: string;
   category: BusinessCategory;
   payment_method: PaymentMethod;
   deposit_percent: number | null;
 } & Record<HoursColumn, number>;
-

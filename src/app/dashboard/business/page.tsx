@@ -34,6 +34,7 @@ export default async function BusinessSettingsPage() {
           <h1 className="mt-2 text-3xl font-semibold tracking-tight">{settings ? "Editar negócio" : "Configure seu negócio"}</h1>
           <p className="mt-2 text-neutral-600">{settings ? "Atualize os dados, disponibilidade e modelo de pagamento." : "Preencha as informações básicas para configurar seu negócio."}</p>
         </header>
+        {settings?.public_slug && <p className="mb-6 rounded-xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-900">Sua página pública: <Link href={`/s/${settings.public_slug}`} target="_blank" className="font-semibold underline underline-offset-4">/s/{settings.public_slug}</Link></p>}
         <BusinessSettingsForm
           sellerId={claims.sub}
           settings={settings}
