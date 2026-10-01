@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Meu projeto",
-  description: "Projeto inicial em Next.js.",
+  title: "Ordi",
+  description: "Acesso à área do seller Ordi.",
 };
 
 export default function RootLayout({
